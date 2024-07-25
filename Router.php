@@ -63,7 +63,8 @@ class Router {
      */
     public function error ($httpCode = 404) {
         http_response_code($httpCode);
-        loadView("error/{$httpCode}");
+        loadView("errors/{$httpCode}");
+        exit;
     }
 
     /**
@@ -81,7 +82,7 @@ class Router {
             }
         }
 
-      
+      $this->error();
     }
     
 }
