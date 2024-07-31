@@ -34,7 +34,7 @@ class Database {
      */
     public function query($query) {
         try {
-            $sth = $this->conn->prepare();
+            $sth = $this->conn->prepare($query);
             $sth->execute();
             return $sth;
         } catch (PDOException $e) {
