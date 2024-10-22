@@ -115,6 +115,8 @@ class ListingController {
 
             $this->db->query($query, $newListingData);
 
+            $_SESSION['success_message'] = 'Listing created successfully!';
+
             redirect('/listings');
         }
     }
@@ -146,4 +148,61 @@ class ListingController {
 
         redirect('/listings');
     }
+
+
+    
+    /**
+     * Show the listing edit form
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function edit ($params) {
+        $id = $params['id'] ?? '';
+
+        $params = [
+            'id' => $id
+        ];
+        
+        $listing = $this->db->query('SELECT * FROM listings WHERE id = :id', $params)->fetch();
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found!');
+            return;
+        }
+
+        loadView('listings/edit', [
+            'listing' => $listing
+        ]);
+    }
+
+    /**
+     * Update a listing
+     * 
+     * @param array $params
+     * @return void
+     */
+    public function update($params) {
+        $params = [
+            'id' => $id
+        ];
+        
+        $listing = $this->db->query('SELECT * FROM listings WHERE id = :id', $params)->fetch();
+
+        if (!$listing) {
+            ErrorController::notFound('Listing not found!');
+            return;
+        }
+
+        $allowedFields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'state', 'phone', 'email', 'requirements', 'benefits'];
+
+        $updatedValues = [];
+
+        foreach($allowedFields as $field) {
+            // if (isset)
+        }
+
+        inspectAndDie($params);
+    }
+
 }
