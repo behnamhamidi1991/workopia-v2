@@ -183,6 +183,8 @@ class ListingController {
      * @return void
      */
     public function update($params) {
+        $id = $params['id'] ?? '';
+
         $params = [
             'id' => $id
         ];
@@ -196,13 +198,41 @@ class ListingController {
 
         $allowedFields = ['title', 'description', 'salary', 'tags', 'company', 'address', 'city', 'state', 'phone', 'email', 'requirements', 'benefits'];
 
-        $updatedValues = [];
+        $updateValues = [];
 
-        foreach($allowedFields as $field) {
-            // if (isset)
+        $updateValues = array_intersect_key($_POST, array_flip($allowedFields));
+
+        $updateValues = array_map('sanitize', $updateValues);
+
+        $requiredFields = ['title', 'description', 'salary', 'email', 'city', 'state'];
+
+        $errors = [];
+
+       foreach($requiredFields as $field) {
+        if (empty($updateValues[$field]) || !Validation::string($updateValues[$field])) {
+            $errors[$field] = ucfirst($field) . ' is required';
+        }
+       }
+
+       if (!empty($errors)) {
+        loadView('listings/edit', [
+            'listing' => $listing,
+            'errors' => $errors
+        ]);
+        exit;
+       } else {
+        // Submit to database
+        $updateFields = [];
+
+        foreach(array_keys($updateValues) as $field) {
+            $updateFields[] = "{$field} = :{$field}";
         }
 
-        inspectAndDie($params);
+        inspectAndDie($updateFields);
+       }
+
+
+        
     }
 
 }
