@@ -228,7 +228,18 @@ class ListingController {
             $updateFields[] = "{$field} = :{$field}";
         }
 
-        inspectAndDie($updateFields);
+        $updateFields = implode(', ', $updateFields);
+        
+        $updateQuery = "UPDATE listings SET $updateFields WHERE id = :id";
+
+        $updateValues['id'] = $id;
+        $this->db->query($updateQuery, $updateValues);
+
+        $_SESSION['success_message'] = 'Listing Updated'; 
+
+        redirect('/listings/' . $id);
+
+        inspectAndDie($updateQuery);
        }
 
 
