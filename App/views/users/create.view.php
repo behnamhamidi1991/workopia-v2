@@ -7,6 +7,7 @@
 <div class="flex justify-center items-center mt-20">
    
       <div class="bg-white p-8 rounded-lg shadow-md w-full md:w-500 mx-6">
+       <!-- ERROR PARTIAL -->
       <?= loadPartial('errors', [
           'errors' => $errors ?? []
         ]) ?>
