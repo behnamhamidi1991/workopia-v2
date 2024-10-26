@@ -1,8 +1,3 @@
-<?php
-      use Framework\Session;
-?>
-
-
 <?php loadPartial('head'); ?> 
 <?php loadPartial('navbar'); ?>     
 <?php loadPartial('top-banner'); ?>   
@@ -16,7 +11,7 @@
         Back To Listings
       </a>
       <div class="flex space-x-4 ml-4">
-      <?php if (Session::has('user')) : ?>
+      <?php if (Framework\Authorization::isOwner($listing->user_id)) : ?>
         <a href="/listings/edit/<?= $listing->id ?>" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">Edit</a>
         <!-- Delete Form -->
         <form method="POST">
@@ -72,3 +67,9 @@
         Apply Now
       </a>
     </section>
+
+
+<?php loadPartial('bottom-banner'); ?> 
+<?php loadPartial('footer'); ?> 
+
+   
