@@ -15,8 +15,8 @@
         <i class="fa fa-arrow-alt-circle-left"></i>
         Back To Listings
       </a>
-      <?php if (Session::has('user')) : ?>
       <div class="flex space-x-4 ml-4">
+      <?php if (Session::has('user')) : ?>
         <a href="/listings/edit/<?= $listing->id ?>" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded">Edit</a>
         <!-- Delete Form -->
         <form method="POST">
